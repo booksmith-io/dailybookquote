@@ -1,6 +1,6 @@
-# daily_book_python
+# dailybookquote
 
-`daily_book_python` finds quotes in free ebooks at [project gutenberg](https://www.gutenberg.org).
+`dailybookquote` finds quotes in free ebooks at [project gutenberg](https://www.gutenberg.org).
 
 ## USAGE
 
@@ -73,7 +73,7 @@ $ cat stderr.o
 
 ## COPYRIGHT AND LICENSE
 
-`daily_book_python` is Copyright (c) 2023 Blaine Motsinger under the MIT license.
+`dailybookquote` is Copyright (c) 2023 Blaine Motsinger under the MIT license.
 
 ## AUTHOR
 
