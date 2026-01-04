@@ -108,10 +108,47 @@ def process(header, body):
     quote_regex = re.compile('^["].+["]\\s*$')
     quotes = []
 
+    # if any of these words are found in the paragraph, skip it.
+    # quote with these words should never go out.
+    slurs = [
+        'beaner', 'bimbo', 'bing', 'blackie', 'bluegum', 'bong', 'bootlip',
+        'brownie', 'buckwheat', 'buddhahead', 'burrhead',
+        'chinaman', 'chinamen', 'ching', 'chong', 'chink', 'chinky', 'chonky',
+        'coon', 'cooney', 'coonass', 'coon-ass', 'cotton picker', 'cracker',
+        'dago', 'dego', 'darky', 'darkie', 'darkey', 'dink', 'dothead',
+        'golliwog', 'gook', 'gook-eye', 'gooky', 'goy', 'goyum', 'goyim',
+        'greaseball', 'greaser', 'greenhorn', 'groid', 'gypsy', 
+        'half-breed', 'heeb', 'hebe', 'hymie', 'injun',
+        'jap', 'jerry', 'jewboy', 'jiggaboo', 'jiggerboo', 'jiggabo', 'jigarooni',
+        'jijjiboo', 'jigg', 'jigger', 'jungle bunny', 'kemosabe', 'kemosahbee',
+        'kike', 'kraut',
+        'mau-mau', 'mayonnaise monkey', 'moon cricket', 'mulignan', 'mulignon',
+        'moolinyan',
+        'neeger', 'negro', 'nigga', 'niger', 'nigger', 'niggaboo', 'niggah', 'niggerboo',
+        'niggress', 'nip',
+        'oreo',
+        'pajeet', 'paleface', 'papoose', 'pocahontas', 'portagee', 'prairie nigger',
+        'rastus', 'redneck', 'russki', 'ruski',
+        'sambo', 'sand nigger', 'sandnigger', 'sheboon', 'sheeny', 'sheenie', 'shine',
+        'shitskin', 'shitlip', 'slope', 'slopehead', 'slopy', 'slopey', 'sloper',
+        'sooty', 'spic', 'spick', 'spik', 'spig', 'spigotty', 'squaw',
+        'tar-baby', 'tonto', 'twinkie', 'twink', 'uncle tom',
+        'wetback', 'white nigger', 'nigger wop', 'white trash', 'wigger', 'whigger',
+        'wigga', 'whigga', 'wop',
+        'yellow bone', 'high yellow',
+        'zip', 'zipperhead',
+    ]
+
     for paragraph in paragraphs:
         match = quote_regex.search(paragraph)
         if match is not None:
             if len(paragraph) > 90 and len(paragraph) < 113:
+                for slur in slurs:
+                    # this is a little lose, but efficient, so we're just leaving it
+                    if slur.lower() in paragraph.lower():
+                        if args.debug:
+                            logger('debug', 'slur [' + slur + '] was found')
+                        continue
                 quotes.append(paragraph)
                 if args.debug:
                     logger('debug', 'quote was found: ' + paragraph)
